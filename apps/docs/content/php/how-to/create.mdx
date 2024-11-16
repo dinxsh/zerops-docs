@@ -1,13 +1,25 @@
 ---
 title: Create a PHP service in Zerops
-description: Learn how you can create a php service in Zerops.
+description: Learn how you can create a PHP service in Zerops.
 ---
 
 import Image from '/src/components/Image';
 import data from '@site/static/data.json';
 import UnorderedList from '@site/src/components/UnorderedList';
 
-Zerops provides 2 PHP services with an included web server: **PHP+Nginx** and **PHP+Apache**. PHP runtime is highly scalable and customisable to suit both development and production.
+Zerops provides highly scalable and customizable PHP services with integrated web servers: **PHP+Nginx** and **PHP+Apache**. These services support both development and production environments with features like automatic scaling, high availability, and environment variable management.
+
+For more details on PHP features in Zerops, see the [PHP documentation](/php/overview).
+
+This guide explains how to create a new PHP service using either the Zerops GUI or command-line interface (zCLI).
+
+## Prerequisites
+
+Before getting started, ensure you have:
+
+- A Zerops account. If you don't have one, [sign up for free](https://zerops.io/signup).
+- (Optional) [zCLI installed](/references/cli) if you plan to use the command-line.
+- Basic familiarity with PHP and web servers. See [PHP concepts](/php/concepts) for an overview.
 
 ## Create PHP service using Zerops GUI
 
@@ -22,7 +34,7 @@ Following PHP major versions are currently supported:
 <UnorderedList data={data.phpMajorVersions} />
 
 :::info
-You can [change](/php/how-to/upgrade) the major version at any time later.
+You can [change](/php/how-to/upgrade) the major version at any time later. See [version management](/php/how-to/versions) for details.
 :::
 
 ### Set a hostname
@@ -31,7 +43,7 @@ Enter a unique service identifier like "app","cache", "gui" etc. Duplicate servi
 
 #### Limitations:
 
-- maximum 25 characters
+- maximum 25 characters 
 - must contain only lowercase ASCII letters (a-z) or numbers (0-9)
 
 :::caution
@@ -46,7 +58,7 @@ Setting the secret environment variables is optional. You can set them later in 
 
 Read more about [different types of env variables](/php/how-to/env-variables#types-of-env-variables-in-zerops) in Zerops.
 
-### Set auto scaling configuration
+### Set auto scaling configuration 
 
 Zerops scales the PHP services automatically both vertically and horizontally. Vertical scaling means increasing or decreasing the hardware resources (CPU, RAM and disk) of a PHP container. Horizontal scaling adds or removes whole containers.
 
@@ -61,7 +73,7 @@ Zerops scales the PHP services automatically both vertically and horizontally. V
 
 #### CPU Mode
 
-**Shared**
+**Shared**  
 Your application gets a full physical CPU core, but it is shared with up to 10 other applications. In this mode the power your application gets is depended on other applications running on the same CPU core. At best case scenario your application gets 10/10 of CPU core power and 1/10 at worst case scenario.
 
 **Dedicated**
@@ -80,7 +92,7 @@ Vertical auto scaling has following default configuration:
 | &nbsp;        | Minimum resource | Maximum resource |
 | ------------- | ---------------- | ---------------- |
 | **CPU cores** | 1                | 5                |
-| **RAM**       | 0.25 GB          | 32 GB            |
+| **RAM**       | 0.25 GB          | 32 GB            |  
 | **Disk**      | 1 GB             | 100 GB           |
 
 PHP service always starts with the minimal resources.
@@ -113,7 +125,7 @@ Horizontal auto scaling has following default configuration:
     </tr>
     <tr>
       <td>
-        <b>maximum containers</b>
+        <b>maximum containers</b>  
       </td>
       <td>6</td>
     </tr>
@@ -128,13 +140,13 @@ You can increase the minimum or decrease the maximum number of containers. The h
 
 #### Single container vs. High Availability
 
-When creating a new runtime service, you can choose the minimum and maximum number of containers. If you set the maximum limit to one, the service will be run in a **single container** and no horizontal scaling will occur.
+When creating a new runtime service, you can choose the minimum and maximum number of containers. If you set the maximum limit to one, the service will be run in a **single container** and no horizontal scaling will occur.  
 
 :::Caution
 If the single container fails, Zerops will start a new container and deploy your application automatically. The application won't be available for a short period. This mode is recommended for non-critical applications or dev environments.
 :::
 
-By increasing the maximum number of containers for your service, you enable horizontal auto scaling. Zerops will then add containers depending on your application’s load. Application running on two or more containers is in **High Availability** mode, which we highly recommend for production. When the load drops, containers will be gradually removed to the defined minimum.
+By increasing the maximum number of containers for your service, you enable horizontal auto scaling. Zerops will then add containers depending on your application's load. Application running on two or more containers is in **High Availability** mode, which we highly recommend for production. When the load drops, containers will be gradually removed to the defined minimum.
 
 Each container of the same service is strictly installed on a **different server**. This prevents the temporary outage in case any of Zerops servers fail. If the connection to a container is broken, Zerops immediately redirects incoming traffic to other containers. A new container will be started automatically and the broken container will be deleted.
 
@@ -147,12 +159,12 @@ Check if your application is ready to be run in multiple containers.
 zCLI is the Zerops command-line tool. To create a new PHP service via the command-line, follow these steps:
 
 1. [Install & setup zCLI](/references/cli)
-2. [Create a project description file](/php/how-to/create#create-a-project-description-file)
+2. [Create a project description file](/php/how-to/create#create-a-project-description-file)  
 3. [Create a project with a PHP and PostgreSQL service](#full-example)
 
 ### Create a project description file
 
-Zerops uses a yaml format to describe the project infrastructure.
+Zerops uses a yaml format to describe the project infrastructure. 
 
 #### Basic example:
 
